@@ -69,10 +69,5 @@ bookListDisplay = data =>{
    
 }
 
-// // sppiner function
-// spinner = (property) => {
-//    const spinner = document.getElementById("spinner");
-//    spinner.style.visibility = property;
-//  };
 
  
