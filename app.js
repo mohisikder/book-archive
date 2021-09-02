@@ -1,51 +1,37 @@
 const inputField = document.getElementById('inputField')
 const totalFoundItems = document.getElementById('searchFound')
 const bookList = document.getElementById('bookList')
-const errorDiv = document.getElementById('error')
-const inputEmpty = document.getElementById('inputEmpty')
+const error = document.getElementById("error")
 
-// spinner function
-loadingSpinner = (property) => {
-   const loadingSpinner = document.getElementById("loadingSpinner");
-   loadingSpinner.style.visibility = property;
- };
 
+//  Spinner
+const spinner = displayStyle =>{
+   document.getElementById("spinner").style.display = displayStyle
+}
 // Input Field
 searchBtn = () =>{
+   // Display Spinner
+  spinner('block')
    const inputValue = inputField.value
-   bookList.textContent = "";
-  totalFoundItems.innerText = "";
-
-      if (inputValue === "") {
-         loadingSpinner('hidden')
-         inputEmpty.style.display = "block";
-         errorDiv.style.display = "none";
-         totalFoundItems.innerText = "";
-         bookList.textContent = "";
-      } else {
-         loadingSpinner('visible')
-         inputEmpty.style.display = "none";
-      
+   // Clear 
+   inputField.value = ""
+   bookList.textContent = ""
+  totalFoundItems.innerText = ""
+   
    //  book url
-   const url = `http://openlibrary.org/search.json?q=${inputValue}`;
+   const url = `https://openlibrary.org/search.json?q=${inputValue}`;
 
    fetch(url)
       .then(res => res.json())
       .then(data => bookListDisplay(data))
-      }
-      inputField.value = ''
-   }
+   
+   // inputField.value = ""
+}
 
 bookListDisplay = data =>{
+   // Total Found Result
    totalFoundItems.innerText = `About ${data.numFound} results`
-
-   if(data.numFound === 0){
-      totalFoundItems.innerText = ''
-      errorDiv.style.display = "block"
-      loadingSpinner('hidden')
-   }else{
-      errorDiv.style.display("none")
-      const bookList = document.getElementById("bookList")
+   const bookList = document.getElementById("bookList")
 
    data.docs.forEach(item => {
       console.log(item)
@@ -78,11 +64,15 @@ bookListDisplay = data =>{
       </div>
       `
       bookList.appendChild(div)
-      loadingSpinner('hidden')
+      spinner('none')
    });
-   }
+   
 }
 
-
+// // sppiner function
+// spinner = (property) => {
+//    const spinner = document.getElementById("spinner");
+//    spinner.style.visibility = property;
+//  };
 
  
